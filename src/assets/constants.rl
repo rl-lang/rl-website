@@ -1,10 +1,10 @@
 CONST string HTML =
 "<!DOCTYPE html>
-<html lang=\"en\">
+<html lang=\"$*1\" dir=\"$*2\">
 \t<!-- HEAD -->
 $1
 \t<!-- END HEAD -->
-\t<!-- BODY -->
+\n\t<!-- BODY -->
 $2
 \t<!-- END BODY -->
 </html>"
@@ -100,3 +100,8 @@ CONST arr[string] DEFAULT_VALUES = [
   "#fafafa",                                                                      // $^13 - Theme Color
   "js/app.js"                                                                     // $^14 - JS URL
 ]
+
+CONST string BODY =
+"<body>
+$*&
+</body>"
