@@ -84,7 +84,7 @@ CONST string HEAD =
 \n\t<script src=\"$^14\" defer></script>
 </head>"
 
-CONST arr[string] DEFAULT_VALUES = [
+CONST arr[string] HEAD_DEFAULT_VALUES = [
   "My Awesome Website",                                                           // $^1  - Title
   "A modern, highly performant responsive web template built with structural HTML5.", // $^2  - Description
   "css/style.css",                                                                // $^3  - CSS URL
