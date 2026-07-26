@@ -1,6 +1,6 @@
 get replace, contains, split, format, join, trim from std::str
 get is_null from std::types
-get len, arr_push from std::array
+get len, arr_push, arr_reverse from std::array
 
 fn replace_this(string content, string target, string replacement) -> string {
     if content.is_empty() or replacement.is_empty() {
@@ -65,4 +65,30 @@ fn handle_head(string head, arr[string] replacements) -> string {
     }
 
     return cleaned_lines.join("\n")?
+}
+
+fn handle_body(string body, arr[string] tags) -> string {
+    dec temp = ""
+    dec i = 1
+    for item in tags {
+        if i < tags.len() {
+            temp = "{}{}\n".format(temp, item)
+        } else {
+            temp = "{}{}".format(temp, item)
+        }
+        i += 1
+    }
+
+    return body.replace("$*&", temp)
+}
+
+fn handle_style(string styles, arr[string] values) -> string {
+    dec out = styles
+    dec i = values.len()
+    dec values = values.arr_reverse()?
+    for v in values {
+        out = out.replace("$^&*{}".format(i), v)
+        i -= 1
+    }
+    return out
 }

@@ -469,7 +469,7 @@ img, svg {
   }
 }"
 
-CONST arr[string] DEFAULT_VALUES = [
+CONST arr[string] STYLE_DEFAULT_VALUES = [
   "#f8fafc",                      // $^&*1   - Light Mode: Primary page background
   "#ffffff",                      // $^&*2   - Light Mode: Secondary background (cards/headers)
   "#0f172a",                      // $^&*3   - Light Mode: Primary text
