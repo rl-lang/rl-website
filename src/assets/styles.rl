@@ -330,6 +330,7 @@ img, svg {
 }
 
 .nav-container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -343,14 +344,69 @@ img, svg {
   color: var(--accent);
 }
 
+/* Mobile nav toggle (checkbox hack, no JS required) */
+.nav-toggle-input {
+  display: none;
+}
+
+.nav-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 24px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.nav-toggle-input:checked ~ .nav-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle-input:checked ~ .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle-input:checked ~ .nav-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .nav-menu {
   display: none;
+  position: absolute;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  flex-direction: column;
+  gap: 0;
+  list-style: none;
+  background-color: var(--bg-secondary);
+  border-bottom: $^&*28;
+  padding: 0.5rem 1.5rem 1rem;
+}
+
+.nav-menu li {
+  padding: 0.5rem 0;
+}
+
+.nav-toggle-input:checked ~ .nav-menu {
+  display: flex;
 }
 
 /* Hero Section */
 .hero {
   padding: $^&*33;
   text-align: center;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 
 .hero h1 {
@@ -368,6 +424,9 @@ img, svg {
 /* Main Content Area & Sidebar Stack */
 .main-layout {
   padding: $^&*39;
+}
+
+.main-layout .container {
   display: flex;
   flex-direction: column;
   gap: $^&*40;
@@ -381,6 +440,8 @@ img, svg {
 }
 
 .card {
+  position: relative;
+  overflow: hidden;
   background-color: var(--bg-secondary);
   border: $^&*43;
   border-radius: var(--radius);
@@ -388,9 +449,36 @@ img, svg {
   transition: var(--transition);
 }
 
+.card::before {
+  content: \"\";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: var(--transition);
+}
+
 .card:hover {
   transform: $^&*45;
   box-shadow: $^&*46;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card h2 {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
 /* Footer */
@@ -402,6 +490,29 @@ img, svg {
   text-align: center;
   font-size: $^&*49;
   color: var(--text-secondary);
+}
+
+.site-footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
 }
 
 /* Buttons */
@@ -424,6 +535,25 @@ img, svg {
   background-color: var(--accent-hover);
 }
 
+.btn-secondary {
+  background-color: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* Accessibility: visible focus states */
+a:focus-visible,
+button:focus-visible,
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ==========================================================================
    4. DESKTOP & TABLET MEDIA QUERIES
    ========================================================================== */
@@ -434,10 +564,23 @@ img, svg {
     font-size: $^&*54;
   }
 
+  .nav-toggle {
+    display: none;
+  }
+
   .nav-menu {
     display: flex;
+    position: static;
+    flex-direction: row;
     gap: $^&*55;
     list-style: none;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .nav-menu li {
+    padding: 0;
   }
 
   .nav-link {
@@ -458,7 +601,7 @@ img, svg {
 
 /* Desktop Screens (1024px and up) */
 @media (min-width: $^&*58) {
-  .main-layout {
+  .main-layout .container {
     display: grid;
     grid-template-columns: $^&*59;
     gap: $^&*60;
