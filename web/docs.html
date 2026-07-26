@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<!-- HEAD -->
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>Docs - RL Programming Language</title>
+
+		<meta name="description" content="Syntax, core concepts, and the standard library for the RL programming language." />
+
+		<link rel="stylesheet" href="css/style.css" />
+
+		<meta property="og:title" content="Docs - RL Programming Language" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://example.com" />
+		<meta property="og:image" content="https://example.com/og-image.png" />
+		<meta property="og:image:alt" content="Preview screenshot of My Awesome Website user interface." />
+
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="icon.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<meta name="theme-color" content="#fafafa" />
+
+		<script src="js/rl-highlight.js" defer></script>
+	</head>
+	<!-- END HEAD -->
+
+	<!-- BODY -->
+	<body>
+	<div class="site-wrapper">
+	<header class="site-header">
+		<div class="container">
+			<nav class="nav-container">
+				<a href="index.html" class="logo">RL Lang</a>
+				<input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
+				<label for="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+					<span></span><span></span><span></span>
+				</label>
+				<ul class="nav-menu">
+					<li><a href="index.html" class="nav-link">Home</a></li>
+					<li><a href="docs.html" class="nav-link">Docs</a></li>
+					<li><a href="examples.html" class="nav-link">Examples</a></li>
+					<li><a href="https://github.com/rl-lang/rl-lang" class="nav-link">GitHub</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<section class="page-header">
+		<div class="container">
+			<h1>Documentation</h1>
+			<p>A quick tour of the RL language: syntax, core concepts, and the standard library.</p>
+		</div>
+	</section>
+	<main class="main-layout">
+		<div class="container">
+			<div class="prose">
+				<h2>Hello, RL</h2>
+				<p>RL programs run top to bottom. <code>println</code> writes a value followed by a newline, and comments start with <code>//</code> and are ignored by the interpreter.</p>
+				<pre class="rl-code">
+	// prints a greeting
+	println("hello, rl")
+	// prints 2
+	println(1 + 1)</pre>
+
+				<h2>Variables</h2>
+				<p>Values are declared with <code>dec</code>, and each one is given an explicit type such as <code>int</code>, <code>float</code>, <code>bool</code>, or <code>string</code>. Use <code>CONST</code> instead for values that never change.</p>
+				<pre class="rl-code">
+	dec int score = 0
+	dec string name = "ada"
+	CONST int MAX_ATTEMPTS = 10</pre>
+
+				<h2>Functions</h2>
+				<p>Functions are declared with <code>fn</code>, take typed parameters, and can return a value using <code>-&gt;</code>.</p>
+				<pre class="rl-code">
+	fn add(int a, int b) -&gt; int {
+	    return a + b
+	}</pre>
+
+				<h2>Control Flow</h2>
+				<p><code>if</code> / <code>else</code>, <code>while</code>, and <code>for</code> loops behave much like other C-family languages, and <code>match</code> adds pattern-based branching for more complex conditions.</p>
+				<pre class="rl-code">
+	for n in [1, 2, 3] {
+	    if (n % 2 == 0) {
+	        println("even")
+	    } else {
+	        println("odd")
+	    }
+	}</pre>
+
+				<h2>Standard Library</h2>
+				<p>RL ships with built-in modules for common tasks &mdash; files and paths, strings, arrays, randomness, time, and more &mdash; brought into scope with <code>get</code>.</p>
+				<pre class="rl-code">
+	get read_int, println from std::io
+	get rand_int_range from std::random</pre>
+
+				<p>For the complete reference, see the <a href="https://rl-lang.github.io/the-book" class="nav-link">language book</a> and the <a href="https://rl-lang.github.io/rl-lang" class="nav-link">Rust API docs</a>.</p>
+			</div>
+		</div>
+	</main>
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; 2026 RL Programming Language. All rights reserved.</p>
+			<ul class="footer-links">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="docs.html">Docs</a></li>
+				<li><a href="examples.html">Examples</a></li>
+				<li><a href="https://github.com">GitHub</a></li>
+			</ul>
+		</div>
+	</footer>
+	</div>
+	</body>
+	<!-- END BODY -->
+</html>

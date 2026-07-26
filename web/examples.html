@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<!-- HEAD -->
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<title>Examples - RL Programming Language</title>
+
+		<meta name="description" content="Complete example programs written in the RL programming language." />
+
+		<link rel="stylesheet" href="css/style.css" />
+
+		<meta property="og:title" content="Examples - RL Programming Language" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://example.com" />
+		<meta property="og:image" content="https://example.com/og-image.png" />
+		<meta property="og:image:alt" content="Preview screenshot of My Awesome Website user interface." />
+
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" href="/icon.svg" type="image/svg+xml" />
+		<link rel="apple-touch-icon" href="icon.png" />
+		<link rel="manifest" href="site.webmanifest" />
+		<meta name="theme-color" content="#fafafa" />
+
+		<script src="js/rl-highlight.js" defer></script>
+	</head>
+	<!-- END HEAD -->
+
+	<!-- BODY -->
+	<body>
+	<div class="site-wrapper">
+	<header class="site-header">
+		<div class="container">
+			<nav class="nav-container">
+				<a href="index.html" class="logo">RL Lang</a>
+				<input type="checkbox" id="nav-toggle" class="nav-toggle-input" />
+				<label for="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+					<span></span><span></span><span></span>
+				</label>
+				<ul class="nav-menu">
+					<li><a href="index.html" class="nav-link">Home</a></li>
+					<li><a href="docs.html" class="nav-link">Docs</a></li>
+					<li><a href="examples.html" class="nav-link">Examples</a></li>
+					<li><a href="https://github.com/rl-lang/rl-lang" class="nav-link">GitHub</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	<section class="page-header">
+		<div class="container">
+			<h1>Examples</h1>
+			<p>Complete programs written in RL, taken from the project's <code>examples/</code> directory.</p>
+		</div>
+	</section>
+	<main class="main-layout">
+		<div class="container">
+			<div class="prose">
+				<h2>Guessing Game</h2>
+				<p>A complete number-guessing game: it reads guesses from the player, tracks every attempt, and prints a summary once the game ends.</p>
+				<pre class="rl-code">
+	get rand_int_range from std::random
+	get read_int, print, println from std::io
+	get format, repeat from std::str
+	get arr_push, arr_min, arr_max, arr_filter, len from std::array
+	get is_null from std::types
+
+	fn print_divider() {
+	    "-".repeat(30).println()
+	}
+
+	fn check_guess(int guess, int secret) -&gt; string {
+	    if (guess &lt; secret) {
+	        return "low"
+	    }
+	    if (guess &gt; secret) {
+	        return "high"
+	    }
+	    return "correct"
+	}
+
+	fn find_first_correct(arr[int] guesses, int secret) -&gt; int {
+	    dec int i = 0
+	    for g in guesses {
+	        if (g == secret) {
+	            return i
+	        }
+	        i += 1
+	    }
+	    return null
+	}
+
+	CONST int MAX_ATTEMPTS = 10
+
+	dec int secret = rand_int_range(1, 100)?
+	dec int left = MAX_ATTEMPTS
+	dec arr[int] guesses = []
+	dec bool won = false
+
+	print_divider()
+	println("welcome to the guessing game!")
+	println("i am thinking of a number between 1 and 100")
+	print_divider()
+
+	while (left &gt; 0) {
+	    dec int guess = read_int(format("guess ({} left): ", left))?
+	    dec string res = check_guess(guess, secret)
+	    guesses = arr_push(guesses, guess)?
+	    left -= 1
+
+	    if (res == "correct") {
+	        won = true
+	        println("correct! you got it!")
+	        break
+	    }
+	    println(format("too {}!", res))
+	}
+
+	if (!won) {
+	    println(format("out of attempts! the number was {}", secret))
+	}
+
+	dec arr[int] below = arr_filter(guesses, fn (int g) -&gt; bool {
+	    return g &lt; secret
+	})?
+	dec arr[int] above = arr_filter(guesses, fn (int g) -&gt; bool {
+	    return g &gt; secret
+	})?
+	dec int idx = find_first_correct(guesses, secret)
+
+	print_divider()
+	println("game summary")
+	print_divider()
+	println(format("total guesses: {}", len(guesses)))
+	println(format("lowest:        {}", arr_min(guesses)?))
+	println(format("highest:       {}", arr_max(guesses)?))
+	println(format("guesses below: {}", len(below)))
+	println(format("guesses above: {}", len(above)))
+
+	if (!is_null(idx)) {
+	    println(format("you got it on attempt {}", idx + 1))
+	}</pre>
+
+				<h2>Task Manager (excerpt)</h2>
+				<p>A small command parser from a longer CSV-backed task manager, splitting a line of input into a command and its arguments.</p>
+				<pre class="rl-code">
+	fn parse_command(string input) -&gt; arr[string] {
+	    dec int space = index_of(input, " ")
+	    if (space == -1) {
+	        return [trim(input), ""]
+	    }
+	    dec string cmd = slice(input, 0, space)?
+	    dec string args = trim(slice(input, space + 1, len(input))?)
+	    return [cmd, args]
+	}</pre>
+
+				<p>Browse the full source for these and other programs (a CSV parser, HTTP and TCP servers) in the project's <code>examples/</code> folder.</p>
+			</div>
+		</div>
+	</main>
+	<footer class="site-footer">
+		<div class="container">
+			<p>&copy; 2026 RL Programming Language. All rights reserved.</p>
+			<ul class="footer-links">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="docs.html">Docs</a></li>
+				<li><a href="examples.html">Examples</a></li>
+				<li><a href="https://github.com">GitHub</a></li>
+			</ul>
+		</div>
+	</footer>
+	</div>
+	</body>
+	<!-- END BODY -->
+</html>
